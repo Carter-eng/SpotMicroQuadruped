@@ -1,6 +1,6 @@
 import math
 from adafruit_servokit import ServoKit
-from pynput import keyboard
+import keyboard
 
 class sevoTest:
     def __init__(self):
