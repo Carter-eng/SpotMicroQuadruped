@@ -8,14 +8,16 @@ from pupper.Config import Configuration
 config = Configuration()
 command = Command()
 state = State()
+
 class JoystickInterface:
     def __init__(
         self, config):
         self.config = config
         self.previous_gait_toggle = 0
-        self.previous_state = BehaviorState.TROT
+        self.previous_state = BehaviorState.REST
         self.previous_hop_toggle = 0
         self.previous_activate_toggle = 0
+        self.gait_toggle = 0
        
     #    self.message_rate = 50
     #    self.udp_handle = UDPComms.Subscriber(udp_port, timeout=0.3)
@@ -25,10 +27,16 @@ class JoystickInterface:
     def get_command(self, chosenKey):
         global command, state, config
         while True:
-            gait_toggle = 0
-            if chosenKey == 't':
-                gait_toggle =1
-            command.trot_event = (gait_toggle == 1 and self.previous_gait_toggle == 0)
+            keytest = str(chosenKey)
+            print(type(keytest))
+            print(keytest)
+            if keytest == 't':
+                self.gait_toggle = 1
+                print('PASS')
+            else:
+                print('FAIL')
+            print(self.gait_toggle)
+            command.trot_event = (self.gait_toggle == 1 and self.previous_gait_toggle == 0)
             hop_toggle = 0
             if chosenKey == 'Key.space':
                 hop_toggle = 1
@@ -37,7 +45,7 @@ class JoystickInterface:
             if chosenKey == 'b':
                 activate_toggle = 1
             command.activate_event = (activate_toggle == 1 and self.previous_activate_toggle == 0)
-            self.previous_gait_toggle = gait_toggle
+            self.previous_gait_toggle = self.gait_toggle
             self.previous_hop_toggle = hop_toggle
             self.previous_activate_toggle = activate_toggle
             if chosenKey == 'Key.right':
