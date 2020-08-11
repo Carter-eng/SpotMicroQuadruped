@@ -4,17 +4,18 @@ from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
 from src.State import State
-from pupper.HardwareInterface import HardwareInterface
+# from pupper.HardwareInterface import HardwareInterface
 from pupper.Config import Configuration
 from pupper.Kinematics import four_legs_inverse_kinematics
-
+from pynput import keyboard
+chosenKey = ['b']
 def main(use_imu=False):
     """Main program
     """
-
+    global chosenKey
     # Create config
     config = Configuration()
-    hardware_interface = HardwareInterface()
+#     hardware_interface = HardwareInterface()
 
     # Create imu handle
     if use_imu:
@@ -38,18 +39,25 @@ def main(use_imu=False):
     print("swing time: ", config.swing_time)
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
-
+    chosenKey = 'b'
+    def on_press(key):
+        global chosenKey
+        chosenKey = key
+        
+        return chosenKey
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start() 
     # Wait until the activate button has been pressed
-    while True:
+    while True:        
         print("Waiting for L1 to activate robot.")
         while True:
-            command = joystick_interface.get_command(state)
-            joystick_interface.set_color(config.ps4_deactivated_color)
+            command = joystick_interface.get_command(chosenKey)
+            
             if command.activate_event == 1:
                 break
             time.sleep(0.1)
         print("Robot activated.")
-        joystick_interface.set_color(config.ps4_color)
+
 
         while True:
             now = time.time()
@@ -58,7 +66,7 @@ def main(use_imu=False):
             last_loop = time.time()
 
             # Parse the udp joystick commands and then update the robot controller's parameters
-            command = joystick_interface.get_command(state)
+            command = joystick_interface.get_command(chosenKey)
             if command.activate_event == 1:
                 print("Deactivating Robot")
                 break
@@ -73,7 +81,6 @@ def main(use_imu=False):
             controller.run(state, command)
 
             # Update the pwm widths going to the servos
-            hardware_interface.set_actuator_postions(state.joint_angles)
-
+#             hardware_interface.set_actuator_postions(state.joint_angles)
 
 main()
