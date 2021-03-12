@@ -47,4 +47,4 @@ class servoPrep:
         else:
             angle = adjustAngle(angle)
             return angle
-servoPrep.self.servoBounds()
+servoPrep.servoBounds(self)
