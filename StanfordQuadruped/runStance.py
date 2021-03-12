@@ -47,4 +47,5 @@ def adjustAngle(angle):
         angle = adjustAngle(angle)
         return angle
 
-self.servoBounds
+    
+servoBounds()
