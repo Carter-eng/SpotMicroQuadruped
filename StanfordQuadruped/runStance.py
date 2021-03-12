@@ -3,32 +3,32 @@ from adafruit_servokit import ServoKit
 import numpy as np
 
 
-def __init__(self):
-    self.kit = ServoKit(channels=16)
-    self.angles = np.zeros((3,4))
-    self.neutralAngles = np.array([90,90,90,90],[135,135,135,135],[90,90,90,90])
-def servoBounds(self):
+
+def servoBounds():
+    kit = ServoKit(channels=16)
+    angles = np.zeros((3,4))
+    neutralAngles = np.array([90,90,90,90],[135,135,135,135],[90,90,90,90])
     counter = 0
     for i in range (4):
         for j in range (3):
-            self.angles[j,i] = 0
-            self.kit.servo[counter].angle = self.angles[j,i]
+            angles[j,i] = 0
+            kit.servo[counter].angle = angles[j,i]
             print('Servo set to 0\n')
             value = input('press any key and enter to continue\n')
-            self.angles[j,i] = 180
-            self.kit.servo[counter].angle = self.angles[j,i]
+            angles[j,i] = 180
+            kit.servo[counter].angle = angles[j,i]
             print('Servo set to 180\n')
             value = input('press any key and enter to continue\n')
-            self.angles[j,i] = 90
-            self.kit.servo[counter].angle = self.angles[j,i]
+            angles[j,i] = 90
+            kit.servo[counter].angle = angles[j,i]
             print('Servo set to 90\n')
             value = input('press any key and enter to continue\n')
-            self.angles[j,i] = self.neutralAngles[j,i]
-            self.kit.servo[counter].angle = self.angles[j,i]
+            angles[j,i] = neutralAngles[j,i]
+            kit.servo[counter].angle = angles[j,i]
             print('Servo set to neutral angle\nThis is the angle where it stands noramlly\n')
-            self.kit.servo[counter].angle = adjustAngle(self.angles[j,i])
+            kit.servo[counter].angle = adjustAngle(angles[j,i])
             print('complete')
-            return self.angles
+            return angles
 def adjustAngle(angle):
     value = input('press w to add 5 degrees, s to subtract 5, and a main the same\n')
     if value == 'a':
