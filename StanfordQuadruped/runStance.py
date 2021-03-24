@@ -7,7 +7,7 @@ import numpy as np
 def servoBounds():
     kit = ServoKit(channels=16)
     angles = np.zeros((3,4))
-    neutralAngles = np.array([90,90,90,90],[135,135,135,135],[90,90,90,90])
+    neutralAngles = np.array([[90,90,90,90],[135,135,135,135],[90,90,90,90]])
     counter = 0
     for i in range (4):
         for j in range (3):
