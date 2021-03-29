@@ -28,6 +28,7 @@ def servoBounds():
             print('Servo set to neutral angle\nThis is the angle where it stands noramlly\n')
             kit.servo[counter].angle = adjustAngle(angles[j,i])
             print('complete')
+            counter = counter + 1
             
 def adjustAngle(angle):
     value = input('press w to add 5 degrees, s to subtract 5, and a main the same\n')
